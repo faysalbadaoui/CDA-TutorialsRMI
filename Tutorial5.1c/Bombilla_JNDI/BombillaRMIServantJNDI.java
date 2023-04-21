@@ -1,18 +1,17 @@
-
-import java.rmi.*;
+import java.rmi.RemoteException;
 
 
 // Implementacion Servidor
-public class BombillaRMIServantCallbacks implements BombillaRMICallbacks
+public class BombillaRMIServantJNDI implements BombillaRMIJNDI
 {
 	private static final long serialVersionUID = 1;
 	
 	private boolean luzOn;
 	private int temp = 0;
 	private int consumo = 0;
-	private ClientCallbacks cl;
+	private ClientCallbacksJNDI cl;
 	// Constructor.
-	public BombillaRMIServantCallbacks() throws RemoteException
+	public BombillaRMIServantJNDI() throws RemoteException
 	{
 		// Asignar valor por defecto = off
 		setBombilla(false);
@@ -60,7 +59,7 @@ public class BombillaRMIServantCallbacks implements BombillaRMICallbacks
 	}
 
 	@Override
-	public void subscribe(ClientCallbacks cli) throws RemoteException {
+	public void subscribe(ClientCallbacksJNDI cli) throws RemoteException {
 		cl = cli;
 	}
 
