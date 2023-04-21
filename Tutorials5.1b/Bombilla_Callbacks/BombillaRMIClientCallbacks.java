@@ -1,7 +1,7 @@
 
 import java.rmi.*;
 
-public class BombillaRMIClient
+public class BombillaRMIClientCallbacks implements ClientCallbacks
 {
 	public static void main(String args[])
 	{
@@ -57,5 +57,10 @@ public class BombillaRMIClient
 		{
 			System.err.println("Error - " + e);
 		}		
+	}
+
+	@Override
+	public void tempModifyied(String val) throws RemoteException {
+		System.out.println("Temperature changed: " + val);
 	}
 }
