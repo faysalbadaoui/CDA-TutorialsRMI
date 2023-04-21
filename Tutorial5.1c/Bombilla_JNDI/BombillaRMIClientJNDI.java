@@ -1,7 +1,8 @@
 
 import java.rmi.*;
+import java.rmi.server.UnicastRemoteObject;
 
-public class BombillaRMIClient
+public class BombillaRMIClientJNDI implements ClientCallbacksJNDI
 {
 	public static void main(String args[])
 	{
@@ -21,8 +22,8 @@ public class BombillaRMIClient
 			Remote servicioRemoto = Naming.lookup(registro);
 			
 			// Convertir a un interfaz
-			BombillaRMI servicioBombilla = (BombillaRMI) servicioRemoto;
-			
+			BombillaRMIJNDI servicioBombilla = (BombillaRMIJNDI) servicioRemoto;
+			servicioBombilla.subscribe((ClientCallbacksJNDI) UnicastRemoteObject.exportObject(new BombillaRMIClientJNDI(), 0));
 			// Encender la bombilla
 			System.out.println("Invocando servicioBombilla.on()");
 			servicioBombilla.on();
@@ -57,5 +58,10 @@ public class BombillaRMIClient
 		{
 			System.err.println("Error - " + e);
 		}		
+	}
+
+	@Override
+	public void tempModifyied(String val) throws RemoteException {
+		System.out.println("Temperature changed: " + val);
 	}
 }

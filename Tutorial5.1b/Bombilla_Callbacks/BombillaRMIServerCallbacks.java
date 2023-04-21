@@ -6,7 +6,7 @@ import java.rmi.server.*;
 
 
 // Servidor
-public class BombillaRMIServerCallbacks extends BombillaRMIServantCallbacks
+public class BombillaRMIServerCallbacks extends BombillaRMIServantJNDI
 {
 	public BombillaRMIServerCallbacks() throws RemoteException {
 	}
