@@ -29,6 +29,7 @@ public class BombillaRMIServerCallbacks extends BombillaRMIServantCallbacks
 				Registry registry = LocateRegistry.getRegistry();
 				registry.bind("BombillaRMI", bombilla);
 				System.err.println("Server ready");
+
 		}
 		catch (RemoteException re)
 		{
