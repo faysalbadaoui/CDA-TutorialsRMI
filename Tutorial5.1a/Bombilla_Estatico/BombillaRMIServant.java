@@ -4,8 +4,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 
 // Implementacion Servidor
-public class BombillaRMIServant extends UnicastRemoteObject 
-										  implements BombillaRMI
+public class BombillaRMIServant implements BombillaRMI
 {
 	private static final long serialVersionUID = 1;
 	
@@ -41,13 +40,13 @@ public class BombillaRMIServant extends UnicastRemoteObject
 	}
 
 	@Override
-	public int getTemp() throws RemoteException {
-		return temp;
+	public String getTemp() throws RemoteException {
+		return(Integer.toString(temp));
 	}
 
 	@Override
-	public int getCons() throws RemoteException {
-		return consumo;
+	public String getCons() throws RemoteException {
+		return(Integer.toString(consumo));
 	}
 
 	@Override

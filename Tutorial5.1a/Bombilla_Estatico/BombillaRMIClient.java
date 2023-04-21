@@ -37,7 +37,13 @@ public class BombillaRMIClient
 			// Mirar si el estado ha cambiado
 			System.out.println("Estado bombilla: " + servicioBombilla.isOn() );
 
+			System.out.println("Modifying temperature to 20");
+			servicioBombilla.modifyTemp(20);
+			System.out.println("Temperature: "+servicioBombilla.getTemp());
 
+			System.out.println("Modifying consum to 20");
+			servicioBombilla.modifyCons(20);
+			System.out.println("Consum: "+servicioBombilla.getCons());
 		}
 		catch (NotBoundException nbe)
 		{

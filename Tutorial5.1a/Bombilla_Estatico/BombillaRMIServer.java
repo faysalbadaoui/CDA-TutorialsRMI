@@ -1,11 +1,16 @@
 
 import java.rmi.*;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.*;
 
 
 // Servidor
-public class BombillaRMIServer
+public class BombillaRMIServer extends BombillaRMIServant
 {
+	public BombillaRMIServer() throws RemoteException {
+	}
+
 	public static void main(String args[])
 	{
 		System.out.println("Cargando Servicio RMI");
@@ -14,21 +19,16 @@ public class BombillaRMIServer
 		{
 				// Cargar el servicio.
 				BombillaRMIServant servicioBombilla = new BombillaRMIServant();
-				
+
 				// Imprimir la ubicacion del servicio.
-				RemoteRef location = servicioBombilla.getRef();
-				System.out.println(location.remoteToString());
 				
 				// Comprobar si se ha expecificado un registro (arg[0])
-				String registry = "localhost";
-				if (args.length >= 1)
-					registry = args[0];
-				
+
+				BombillaRMI bombilla = (BombillaRMI) UnicastRemoteObject.exportObject(servicioBombilla, 0);
 				// Crear la URL del registro.
-				String registro ="rmi://" + registry + "/BombillaRMI";
-				
-				// Registrar el servicio
-				Naming.rebind(registro, servicioBombilla);
+				Registry registry = LocateRegistry.getRegistry();
+				registry.bind("BombillaRMI", bombilla);
+				System.err.println("Server ready");
 		}
 		catch (RemoteException re)
 		{
