@@ -35,7 +35,9 @@ public class BombillaRMIClient
 			servicioBombilla.off();
 			
 			// Mirar si el estado ha cambiado
-			System.out.println("Estado bombilla: " + servicioBombilla.isOn() );				
+			System.out.println("Estado bombilla: " + servicioBombilla.isOn() );
+
+
 		}
 		catch (NotBoundException nbe)
 		{

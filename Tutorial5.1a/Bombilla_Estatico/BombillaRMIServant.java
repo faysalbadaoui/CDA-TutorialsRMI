@@ -10,6 +10,8 @@ public class BombillaRMIServant extends UnicastRemoteObject
 	private static final long serialVersionUID = 1;
 	
 	private boolean luzOn;
+	private int temp = 0;
+	private int consumo = 0;
 	
 	// Constructor.
 	public BombillaRMIServant() throws RemoteException
@@ -37,7 +39,28 @@ public class BombillaRMIServant extends UnicastRemoteObject
 	{
 		return getBombilla();
 	}
-	
+
+	@Override
+	public int getTemp() throws RemoteException {
+		return temp;
+	}
+
+	@Override
+	public int getCons() throws RemoteException {
+		return consumo;
+	}
+
+	@Override
+	public void modifyCons(int val) throws RemoteException {
+		consumo = val;
+	}
+
+	@Override
+	public void modifyTemp(int val) throws RemoteException {
+		temp = val;
+	}
+
+
 	// Metodo local -> Modificar el estado de la bombilla.
 	public void setBombilla(boolean valor)
 	{
@@ -48,5 +71,6 @@ public class BombillaRMIServant extends UnicastRemoteObject
 	public boolean getBombilla()
 	{
 		return(luzOn);
-	}		
+	}
+
 }
