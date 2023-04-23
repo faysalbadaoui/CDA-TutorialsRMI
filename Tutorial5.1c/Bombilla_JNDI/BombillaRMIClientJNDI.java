@@ -1,6 +1,12 @@
 
-import java.rmi.*;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Hashtable;
 
 public class BombillaRMIClientJNDI implements ClientCallbacksJNDI
 {
@@ -11,18 +17,13 @@ public class BombillaRMIClientJNDI implements ClientCallbacksJNDI
 		try
 		{
 			// Comprobar si se ha especificado la direccion del servicio de registros
-			String registry = "localhost";
-			if (args.length >=1)
-				registry = args[0];
-				
-			// Formatear la url del registro
-			String registro ="rmi://" + registry + "/BombillaRMI";
-			
-			// Buscar el servicio en el registro.
-			Remote servicioRemoto = Naming.lookup(registro);
-			
-			// Convertir a un interfaz
-			BombillaRMIJNDI servicioBombilla = (BombillaRMIJNDI) servicioRemoto;
+			final Hashtable jndiProperties = new Hashtable();
+			jndiProperties.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.rmi.registry.RegistryContextFactory");
+			jndiProperties.put(Context.PROVIDER_URL, "rmi://localhost:1234");
+
+			InitialContext ctx = new InitialContext(jndiProperties);
+			BombillaRMIServantJNDI servicioBombilla = (BombillaRMIServantJNDI) ctx.lookup("/jndi/test01");
+
 			servicioBombilla.subscribe((ClientCallbacksJNDI) UnicastRemoteObject.exportObject(new BombillaRMIClientJNDI(), 0));
 			// Encender la bombilla
 			System.out.println("Invocando servicioBombilla.on()");
@@ -45,12 +46,7 @@ public class BombillaRMIClientJNDI implements ClientCallbacksJNDI
 			System.out.println("Modifying consum to 20");
 			servicioBombilla.modifyCons(20);
 			System.out.println("Consum: "+servicioBombilla.getCons());
-		}
-		catch (NotBoundException nbe)
-		{
-			System.err.println("No existe el servicio de bombilla en el registro!");
-		}
-		catch (RemoteException re)
+		} catch (RemoteException re)
 		{
 			System.err.println("Error Remoto - " + re);
 		}
