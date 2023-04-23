@@ -3,14 +3,14 @@ import java.rmi.*;
 
 
 // Implementacion Servidor
-public class BombillaRMIServantCallbacks implements BombillaRMIJNDI
+public class BombillaRMIServantCallbacks implements BombillaRMICallbacks
 {
 	private static final long serialVersionUID = 1;
 	
 	private boolean luzOn;
 	private int temp = 0;
 	private int consumo = 0;
-	private ClientCallbacksJNDI cl;
+	private ClientCallbacks cl;
 	// Constructor.
 	public BombillaRMIServantCallbacks() throws RemoteException
 	{
@@ -60,7 +60,7 @@ public class BombillaRMIServantCallbacks implements BombillaRMIJNDI
 	}
 
 	@Override
-	public void subscribe(ClientCallbacksJNDI cli) throws RemoteException {
+	public void subscribe(ClientCallbacks cli) throws RemoteException {
 		cl = cli;
 	}
 
