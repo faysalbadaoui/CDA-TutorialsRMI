@@ -44,7 +44,7 @@ public class ClientDist extends UnicastRemoteObject implements Worker {
             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
             PrimeSumServiceDist service = (PrimeSumServiceDist) registry.lookup("PrimeSumService");
 
-            Client client = new Client(service);
+            ClientDist client = new ClientDist(service);
             service.registerWorker(client);
 
             service.asyncPrimeSum(10);

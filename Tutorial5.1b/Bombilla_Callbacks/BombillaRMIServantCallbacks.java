@@ -10,7 +10,7 @@ public class BombillaRMIServantCallbacks implements BombillaRMICallbacks
 	private boolean luzOn;
 	private int temp = 0;
 	private int consumo = 0;
-	private ClientDist cl;
+	private ClientCallbacks cl;
 	// Constructor.
 	public BombillaRMIServantCallbacks() throws RemoteException
 	{
@@ -60,7 +60,7 @@ public class BombillaRMIServantCallbacks implements BombillaRMICallbacks
 	}
 
 	@Override
-	public void subscribe(ClientDist cli) throws RemoteException {
+	public void subscribe(ClientCallbacks cli) throws RemoteException {
 		cl = cli;
 	}
 

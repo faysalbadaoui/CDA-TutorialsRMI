@@ -12,7 +12,7 @@ public interface BombillaRMICallbacks extends java.rmi.Remote
 
 	public void modifyCons(int val) throws RemoteException;
 	public void modifyTemp(int val) throws RemoteException;
-	public void subscribe(ClientDist cl) throws RemoteException;
+	public void subscribe(ClientCallbacks cl) throws RemoteException;
 
 }
 
