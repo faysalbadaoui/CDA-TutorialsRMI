@@ -22,6 +22,16 @@ public class PrimeSumServiceImpl extends UnicastRemoteObject implements PrimeSum
     }
 
     @Override
+    public void registerWorker(Worker worker) throws RemoteException {
+
+    }
+
+    @Override
+    public void unregisterWorker(Worker worker) throws RemoteException {
+
+    }
+
+    @Override
     public void asyncPrimeSum(int m) throws InterruptedException {
         if (!executor.isShutdown()) {
             executor.shutdownNow();
