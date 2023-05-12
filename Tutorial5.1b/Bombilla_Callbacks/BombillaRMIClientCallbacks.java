@@ -23,7 +23,7 @@ public class BombillaRMIClientCallbacks implements ClientCallbacks
 			
 			// Convertir a un interfaz
 			BombillaRMICallbacks servicioBombilla = (BombillaRMICallbacks) servicioRemoto;
-			servicioBombilla.subscribe((ClientCallbacks) UnicastRemoteObject.exportObject(new BombillaRMIClientCallbacks(), 0));
+			servicioBombilla.subscribe((ClientDist) UnicastRemoteObject.exportObject(new BombillaRMIClientCallbacks(), 0));
 			// Encender la bombilla
 			System.out.println("Invocando servicioBombilla.on()");
 			servicioBombilla.on();

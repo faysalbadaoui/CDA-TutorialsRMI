@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Tutorial5.1b/Bombilla_Callbacks" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Tutorial5.1c/Bombilla_JNDI" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Tutorial5.2/SumatorioPrimos" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Tutorial5.3/SumatorioPrimos" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
