@@ -8,11 +8,11 @@ public class Client {
             PrimeSumService service = (PrimeSumService) registry.lookup("PrimeSumService");
 
             // Synchronous call
-            int syncSum = service.syncPrimeSum(10);
+            int syncSum = service.syncPrimeSum(Integer.parseInt(args[0]));
             System.out.println("Synchronous prime sum: " + syncSum);
 
             // Asynchronous call
-            service.asyncPrimeSum(10);
+            service.asyncPrimeSum(Integer.parseInt(args[0]));
             while(!service.isCompleted()) {
                 System.out.println("Waiting for calculation to complete...");
                 Thread.sleep(1000);
