@@ -1,78 +1,54 @@
-import java.rmi.server.UnicastRemoteObject;
 import java.rmi.RemoteException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PrimeSumServiceImpl extends UnicastRemoteObject implements PrimeSumService {
     private int latestSum;
     private boolean isCompleted;
-    private ExecutorService executor;
+    private List<Worker> workers;
 
     public PrimeSumServiceImpl() throws RemoteException {
         super();
-        this.executor = Executors.newSingleThreadExecutor();
-    }
-
-    @Override
-    public int syncPrimeSum(int m) {
-        int sum = calculatePrimeSum(m);
-        this.latestSum = sum;
-        this.isCompleted = true;
-        return sum;
+        this.workers = new ArrayList<>();
     }
 
     @Override
     public void registerWorker(Worker worker) throws RemoteException {
-
+        workers.add(worker);
     }
 
     @Override
     public void unregisterWorker(Worker worker) throws RemoteException {
-
+        workers.remove(worker);
     }
 
     @Override
-    public void asyncPrimeSum(int m) throws InterruptedException {
-        if (!executor.isShutdown()) {
-            executor.shutdownNow();
+    public void asyncPrimeSum(int m) throws RemoteException, InterruptedException {
+        int numWorkers = workers.size();
+        int range = m / numWorkers;
+        this.latestSum = 0;
+        this.isCompleted = false;
+        for (int i = 0; i < numWorkers; i++) {
+            int start = i * range + 1;
+            int end = (i + 1) * range;
+            Worker worker = workers.get(i);
+            int subtaskSum = worker.processSubtask(start, end);
+            this.latestSum += subtaskSum;
         }
-        executor = Executors.newSingleThreadExecutor();
-        executor.submit(() -> {
-            int sum = calculatePrimeSum(m);
-            this.latestSum = sum;
-            this.isCompleted = true;
-        });
+        for (Worker worker : workers) {
+            worker.notifyCompletion();
+        }
+        this.isCompleted = true;
     }
 
     @Override
-    public int getLatestSum() {
+    public int getLatestSum() throws RemoteException {
         return this.latestSum;
     }
 
     @Override
-    public boolean isCompleted() {
+    public boolean isCompleted() throws RemoteException {
         return this.isCompleted;
-    }
-
-    private int calculatePrimeSum(int m) {
-        int sum = 0;
-        for (int i = 2; i <= m; i++) {
-            if (isPrime(i)) {
-                sum += i;
-            }
-        }
-        return sum;
-    }
-
-    private boolean isPrime(int num) {
-        if (num <= 1) {
-            return false;
-        }
-        for (int i = 2; i * i <= num; i++) {
-            if (num % i == 0) {
-                return false;
-            }
-        }
-        return true;
     }
 }
