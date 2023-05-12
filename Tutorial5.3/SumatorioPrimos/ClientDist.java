@@ -3,6 +3,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+
 public class ClientDist extends UnicastRemoteObject implements Worker {
     private PrimeSumServiceDist service;
 
@@ -19,6 +20,7 @@ public class ClientDist extends UnicastRemoteObject implements Worker {
                 sum += i;
             }
         }
+        System.out.println("Calculated: "+sum);
         return sum;
     }
 
@@ -46,16 +48,9 @@ public class ClientDist extends UnicastRemoteObject implements Worker {
 
             ClientDist client = new ClientDist(service);
             service.registerWorker(client);
+            while(true){
 
-            service.asyncPrimeSum(10);
-            while(!service.isCompleted()) {
-                System.out.println("Waiting for calculation to complete...");
-                Thread.sleep(1000);
             }
-            int sum = service.getLatestSum();
-            System.out.println("Asynchronous distributed prime sum: " + sum);
-
-            service.unregisterWorker(client);
         } catch (Exception e) {
             e.printStackTrace();
         }

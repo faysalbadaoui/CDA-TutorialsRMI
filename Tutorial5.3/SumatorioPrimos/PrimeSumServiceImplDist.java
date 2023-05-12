@@ -40,6 +40,7 @@ public class PrimeSumServiceImplDist extends UnicastRemoteObject implements Prim
             worker.notifyCompletion();
         }
         this.isCompleted = true;
+        System.out.println("Result got: " + this.latestSum);
     }
 
     @Override
